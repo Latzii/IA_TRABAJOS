@@ -51,7 +51,7 @@ def pancake_sorting(pancakes):
     movimientos.reverse()
     return movimientos
 
-pancakes = [3 ,2 ,5 ,1 ,4 ,6 ,7 ,8]
+pancakes = ['b', 'h', 'g', 'e', 'c', 'a', 'f', 'd']
 
 start_time = time.time()
 movimientos = pancake_sorting(pancakes)
@@ -63,7 +63,6 @@ print("Lista desordenada:", pancakes)
 print("Lista ordenada:", sorted(pancakes))
 
 if movimientos is not None:
-    print("Pasos necesarios para ordenar:", len(movimientos))
     for i, paso in enumerate(movimientos):
         print(f"Paso {i + 1}: {paso}")
 else:
