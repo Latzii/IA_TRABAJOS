@@ -9,7 +9,7 @@ class Nodo:
 
     def expandir(self):
         for i in range(2, len(self.estado) + 1):
-            nuevo_estado = self.estado[:i][::-1] + self.estado[i:]
+            nuevo_estado = list(reversed(self.estado[:i])) + self.estado[i:]
             nuevo_nodo = Nodo(nuevo_estado, self.profundidad + 1, self)
             self.hijos.append(nuevo_nodo)
 
@@ -35,10 +35,26 @@ class Grafo:
 
         return None
 
-    #Metodo Profundidad iterativa
+ 
+     # Metodo Profundidad iterativa
+    def iddfs_recursiva(self, nodo, limite_profundidad):
+        if nodo.estado == sorted(self.estado_inicial, key=lambda x: ord(x)):
+            return nodo
+
+        if nodo.profundidad < limite_profundidad:
+            nodo.expandir()
+            for hijo in nodo.hijos:
+                if tuple(hijo.estado) not in self.nodos_visitados:
+                    self.nodos_visitados.add(str(hijo.estado))
+                    resultado = self.iddfs_recursiva(hijo, limite_profundidad)
+                    if resultado is not None:
+                        return resultado
+
+        return None
+
     def iddfs(self):
         for limite_profundidad in range(10):
-            resultado = self.dls(self.nodo_inicial, limite_profundidad)
+            resultado = self.iddfs_recursiva(self.nodo_inicial, limite_profundidad)
             if resultado is not None:
                 return resultado
 
@@ -60,7 +76,7 @@ def pancake_sorting(pancakes):
     return movimientos
 
 
-pancakes = [3 ,2 ,5 ,1 ,4 ,8 ,7 ,6]
+pancakes = ['c', 'a', 'b', 'f', 'g', 'h', 'e', 'd']
 
 start_time = time.time()
 movimientos = pancake_sorting(pancakes)
