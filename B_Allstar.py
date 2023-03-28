@@ -1,97 +1,91 @@
+import heapq
 import time
 
 class Nodo:
-    def __init__(self, estado, padre=None, g=0, h=0):
+    def __init__(self, estado, padre=None, accion=None, costo_camino=0):
         self.estado = estado
         self.padre = padre
-        self.g = g
-        self.h = h
-        self.f = g + h
+        self.accion = accion
+        self.costo_camino = costo_camino
+        self.hijos = []
+
+    def agregar_hijo(self, hijo):
+        self.hijos.append(hijo)
+
+    def __lt__(self, otro):
+        return self.costo_camino < otro.costo_camino
 
 class Grafo:
     def __init__(self):
         self.nodos = []
-    
-    def obtener_vecinos(self, nodo):
-        vecinos = []
-        for i in range(2, len(nodo.estado)+1):
-            nuevo_estado = list(reversed(nodo.estado[:i])) + nodo.estado[i:]
-            vecinos.append(Nodo(nuevo_estado, nodo))
-        return vecinos
-    
-    def heuristica(self, nodo):
-        # Heurística: cantidad de pancakes fuera de lugar
-        objetivo = list(range(1, len(nodo.estado)+1))
-        return sum([1 for i in range(len(nodo.estado)) if nodo.estado[i] != objetivo[i]])
-    
-    def a_estrella(self, inicio, objetivo):
-        abiertos = [inicio]
-        cerrados = []
-        
-        while abiertos:
-            actual = min(abiertos, key=lambda x: x.f)
-            
-            if actual.estado == objetivo:
-                # Se encontró la solución A*
-                solucion = []
-                while actual:
-                    solucion.append(actual.estado)
-                    actual = actual.padre
-                return list(reversed(solucion))
-            
-            abiertos.remove(actual)
-            cerrados.append(actual)
-            
-            for vecino in self.obtener_vecinos(actual):
-                if vecino in cerrados:
-                    continue
-                
-                nuevo_g = actual.g + 1
-                if vecino not in abiertos:
-                    abiertos.append(vecino)
-                elif nuevo_g >= vecino.g:
-                    continue
-                
-                vecino.g = nuevo_g
-                vecino.h = self.heuristica(vecino)
-                vecino.f = vecino.g + vecino.h
-        
-        # No se encontró solución
-        return None
-    
-pancakes = [3 ,2 ,5 ,1 ,4 ,6 ,7 ,8]
-start_time = time.time()
-elapsed_time = time.time() - start_time
 
-# Creamos un grafo
-grafo = Grafo()
+    def agregar_nodo(self, nodo):
+        self.nodos.append(nodo)
 
-# Definimos el estado inicial y el estado objetivo
-inicio = Nodo(pancakes)
-objetivo = list(range(1, len(inicio.estado)+1))
+def voltear(pancakes, k):
+    return pancakes[:k+1][::-1] + pancakes[k+1:]
 
-# Resolvemos el problema con A*
-solucion = grafo.a_estrella(inicio, objetivo)
+def es_objetivo(pancakes):
+    return pancakes == sorted(pancakes)
+
+def heuristica(pancakes):
+    cuenta = 0
+    for i in range(len(pancakes)-1):
+        if abs(ord(pancakes[i]) - ord(pancakes[i+1])) > 1:
+            cuenta += 1
+    return cuenta
+
+def a_estrella(pancakes):
+    grafo = Grafo()
+    nodo_inicial = Nodo(pancakes)
+    grafo.agregar_nodo(nodo_inicial)
+    frontera = []
+    heapq.heappush(frontera, (0, nodo_inicial))
+    explorados = set()
+    while frontera:
+        nodo_actual = heapq.heappop(frontera)[1]
+        if es_objetivo(nodo_actual.estado):
+            return nodo_actual
+        explorados.add(tuple(nodo_actual.estado))
+        for i in range(len(nodo_actual.estado)):
+            estado_hijo = voltear(nodo_actual.estado, i)
+            if tuple(estado_hijo) not in explorados:
+                nodo_hijo = Nodo(estado_hijo, nodo_actual, i, nodo_actual.costo_camino + 1)
+                grafo.agregar_nodo(nodo_hijo)
+                nodo_actual.agregar_hijo(nodo_hijo)
+                heapq.heappush(frontera, (nodo_hijo.costo_camino + heuristica(estado_hijo), nodo_hijo))
+    return None
+
+def obtener_solucion(nodo):
+    solucion = []
+    while nodo.padre is not None:
+        solucion.append(nodo.estado)
+        nodo = nodo.padre
+    solucion.reverse()
+    return solucion
+
+pancakes = ['h', 'c', 'f', 'a', 'd', 'g', 'b', 'e']
+
+tiempo_inicio = time.time()  # Guarda el tiempo actual
+nodo_solucion = a_estrella(pancakes)
+solucion = obtener_solucion(nodo_solucion)
+tiempo_transcurrido = time.time() - tiempo_inicio  # Calcula el tiempo transcurrido
 
 print("\nMetodo busqueda por A*")
 
+# Nodo objetivo (pila ordenada)
+objetivo = sorted(pancakes)
 print("Lista desordenada:", pancakes)
-print("Lista ordenada:", sorted(pancakes))
+print("Lista ordenada:", objetivo)
 
+# Imprimir los pasos
+for i, paso in enumerate(solucion, 1):
+    print(f"Paso: {i} {paso}")
+
+print("Movimientos totales realizados:", len(solucion))
 if solucion is not None:
-    movimientos = []
-    for i in range(len(solucion)-1):
-        movimientos.append(list(set(solucion[i]) - set(solucion[i+1])))
-    if not movimientos:
-        print("La lista ya está ordenada.")
-    else:
-        for i, paso in enumerate(solucion):
-            if i > 0:
-                print(f"Paso {i}: {paso}")
-        print("Movimientos totales realizados:", len(movimientos),"Pasos")
+    print("Pasos necesarios para ordenar:", len(solucion))
 else:
     print("No se encontró solución en el límite de movimientos.")
 
-print("Tiempo transcurrido:", elapsed_time, "segundos")
-
-
+print("Tiempo transcurrido:", tiempo_transcurrido, "segundos")
