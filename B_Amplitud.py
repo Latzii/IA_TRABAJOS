@@ -6,11 +6,11 @@ def bfs_pancake_sort(pancakes):
         return pancakes[:k][::-1] + pancakes[k:]
 
     # Número de elementos en pancakes
-    goal = list(range(1, len(pancakes) + 1))
+    goal = sorted(pancakes)
     n = len(pancakes)
 
     # Nodo objetivo (pila ordenada)
-    goal = list(range(1, n + 1))
+    goal = sorted(pancakes)
 
     # Cola para almacenar los nodos a explorar
     queue = []
@@ -67,7 +67,7 @@ def bfs_pancake_sort(pancakes):
 
 
 # Ejemplo de uso
-pancakes = [3 ,2 ,5 ,1 ,4 ,6 ,7 ,8]
+pancakes = ['h', 'c', 'f', 'a', 'd', 'g', 'b', 'e']
 start_time = time.time()  # Guarda el tiempo actual
 path, flips, movimientos = bfs_pancake_sort(pancakes)
 elapsed_time = time.time() - start_time  # Calcula el tiempo transcurrido
