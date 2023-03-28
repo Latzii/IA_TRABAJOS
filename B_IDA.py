@@ -24,20 +24,39 @@ class Pancakegrafo:
         return neighbors
 
     def heuristic(self, estado: List[int]) -> int:
-        return sum([1 for i in range(len(estado) - 1) if abs(estado[i] - estado[i+1]) > 1])
+        return sum([1 for i in range(len(estado) - 1) if abs(ord(estado[i]) - ord(estado[i+1])) > 1])
 
-def ida_star(grafo: Pancakegrafo) -> int:
+def ida_star_recursiva(grafo: Pancakegrafo) -> int:
     bound = grafo.heuristic(grafo.start)
     start_node = Node(grafo.start, 0, bound)
-
+    path = [start_node]
     while True:
-        path = [start_node]
-        min_f = dfs(grafo, path, 0, bound)
+        min_f = dfs_recursive(grafo, path, 0, bound)
         if min_f == float('inf'):
             return -1
         if min_f == 0:
             return path[-1].g
         bound = min_f
+
+def dfs_recursive(grafo: Pancakegrafo, path: List[Node], g: int, bound: int) -> int:
+    node = path[-1]
+    f = g + node.h
+    if f > bound:
+        return f
+    if node.h == 0:
+        return 0
+
+    min_f = float('inf')
+    for neighbor in grafo.get_neighbors(node):
+        if neighbor not in path:
+            path.append(neighbor)
+            new_min_f = dfs_recursive(grafo, path, g + 1, bound)
+            if new_min_f == 0:
+                return 0
+            min_f = min(min_f, new_min_f)
+            path.pop()
+
+    return min_f
 
 def dfs(grafo: Pancakegrafo, path: List[Node], g: int, bound: int) -> int:
     node = path[-1]
@@ -72,7 +91,7 @@ def pancake_sorting(piles: List[int]) -> List[List[int]]:
             return [node.estado for node in path]
         bound = min_f
 
-pancakes = [3 ,2 ,5 ,1 ,4 ,6 ,7 ,8]
+pancakes = ['h', 'c', 'f', 'a', 'd', 'g', 'b', 'e']
 
 start_time = time.time()
 movimientos = pancake_sorting(pancakes)
