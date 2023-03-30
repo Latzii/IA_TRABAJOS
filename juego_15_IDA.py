@@ -102,7 +102,7 @@ else:
         for i, nodo in enumerate(camino): 
             print(f"\nMovimiento {i}:") 
             imprimir_estado(nodo.estado) 
-        print(f"\nTotal numeros de moviminetos utilizados: {len(camino) - 1}") # AQUI
+        print(f"\nTotal numeros de moviminetos utilizados: {len(camino) - 1}") 
 
 
 
