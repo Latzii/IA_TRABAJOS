@@ -10,14 +10,15 @@
 <head>
 </head>
 <body>
-	<h1>Pancake Sorting con distintos algoritmos de búsqueda</h1>
+	<h1>Pancake Sorting con distintos algoritmos de búsqueda y juego del 15 (Taken)</h1>
 
-<p>Este proyecto se enfoca en resolver el juego de Pancake Sorting utilizando cinco algoritmos de búsqueda distintos: A*, IDA, búsqueda por profundidad, búsqueda por profundidad iterativa y búsqueda por amplitud. La finalidad de este proyecto es entender el funcionamiento de los diferentes algoritmos y cómo se pueden aplicar a un problema real.</p>
+<p>Este proyecto se enfoca en resolver el juego de Pancake Sorting utilizando cinco algoritmos de búsqueda distintos: A*, IDA, búsqueda por profundidad, búsqueda por profundidad iterativa y búsqueda por amplitud. Ademas el juego del 15 (Taken), que en mi caso fue resuelto por el metodo de IDA. La finalidad de este proyecto es entender el funcionamiento de los diferentes algoritmos y cómo se pueden aplicar a un problema real.</p>
 
 <h2>Requisitos</h2>
 <ul>
-	<li>Se debe de contar con Python.</li>
+	<li>Se debe de contar con alguna IDE que permita el lenguaje de Python.</li>
 	<li>Se debe tener conocimientos básicos sobre Inteligencia Artificial y los diferentes algoritmos de búsqueda.</li>
+	<li>***Se recomienda Visual Code***</li>
 </ul>
 
 <h2>Instalación</h2>
@@ -28,13 +29,14 @@
 </ol>
 
 <h2>Uso</h2>
-<p>Cada uno de los cinco algoritmos de búsqueda que se han programado en este proyecto se encuentra en el mismo repositorio, donde podrás encontrar el archivo de código fuente. Para utilizar los algoritmos y resolver el juego de Pancake Sorting, sigue los siguientes pasos:</p>
+<p>Cada uno de los cinco algoritmos de búsqueda que se han programado en este proyecto se encuentra en el mismo repositorio, ademas del juego del 15 (Taken), donde podrás encontrar el archivo de código fuente. Para utilizar los algoritmos y resolver el juego de Pancake Sorting, tambien el juego del 15 (Taken), sigue los siguientes pasos:</p>
 <ol>
 	<li>Ejecuta el algoritmo de búsqueda que deseas utilizar. Puedes descargarlo y montarlo en Python o simplemente copiar y pegar en la consola de Python.</li>
-	<li>Observe como la IA resuelve los pancakes.</li>
+	<li>Observe como la IA resuelve los pancakes o juego del 15 (Taken).</li>
 	<li>Espera a que el algoritmo encuentre la solución al juego y muestre el resultado.</li>
+	<li>Dato curioso: En el caso del juego del 15 (Taken) aproximadamente solo el 50% de los casos el algoritmo encuentra una solucion a la lista empleada, en caso de que no encuentre una solucion con la lista empleada se recomienda remplazarla por otra que si tenga solucion, de otra forma solo imprimira el mensaje de "Este rompecabezas no tiene solución".</li>
 </ol>
-  <li>Si quieres probar una lista distinta prueba remplazando lo que esta dentro pancake = [] y ingresa tu lista. Observe resultados diferentes.</li>
+  <li>Si quieres probar una lista distinta prueba remplazando lo que esta dentro pancake = [] y ingresa tu lista. En caso del juego del 15 (Taken) puedes hacer lo mismo solo remplaza lo que esta dentro de estado_inicial = (). Observe resultados diferentes.</li>
 
 <h2>Contribución</h2>
 <p>Este proyecto es un trabajo individual para calificar el semestre, pero si deseas contribuir a su mejora puedes hacerlo mediante la creación de un pull request.</p>
