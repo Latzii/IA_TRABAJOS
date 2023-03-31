@@ -1,6 +1,8 @@
 
 <h1 align="center">Hola 👋, mi nombre es Isaac S.</h1>
-<h2 align="center" style="background-image: url('https://i.pinimg.com/originals/cb/23/0c/cb230cd2dae61a0c34720036f72fa7ea.gif'); color: white; padding: 10px;">Inteligencia Artificial</h2>
+<p align="center">
+  <img alt="Inteligencia Artificial" src="https://es.bloggif.com/tmp/14961b52117471811572d31fcda7b2b6/text.gif?1680243035">
+</p>
 <img align="center" alt="coding" width="400" src="https://gifdb.com/images/file/naruto-side-face-itachi-uchiha-mangekyou-sharingan-3z0u16a5neyc64bf.gif">
 
 
